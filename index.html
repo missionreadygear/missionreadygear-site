@@ -43,7 +43,7 @@
                 <p class="hero-desc">Authentic U.S. Military Surplus and premium tactical equipment. Every item is hand-inspected, graded for transparency, and ready to deploy from Houston, TX.</p>
                 <div class="hero-buttons">
                     <a href="#inventory" class="btn btn-primary">Shop Live Gear</a>
-                    <a href="https://www.instagram.com/missionreadygear" target="_blank" class="btn btn-secondary">Gear guides, camo history, and new drops — @MissionReadyGear</a>
+                    <a href="https://www.instagram.com/missionreadygear" target="_blank" class="btn btn-secondary">Follow for Gear Intel</a>
                 </div>
             </div>
         </div>
@@ -72,22 +72,46 @@
         <div class="container">
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">★</div>
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="creed-svg">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                        </svg>
+                    </div>
                     <h3 class="feature-title">Army Surplus & Tactical</h3>
                     <p class="feature-desc">Authentic military lots, field packs, clothing, and gear sourced from direct lots.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🛡</div>
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="creed-svg">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            <path d="m9 11 2 2 4-4"></path>
+                        </svg>
+                    </div>
                     <h3 class="feature-title">Quality Inspected</h3>
                     <p class="feature-desc">Rigorous Grade A/B/C grading process ensures zero surprises when your package arrives.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">⚓</div>
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="creed-svg">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polygon points="13 6 8 13 12 13 11 18 16 11 12 11 13 6"></polygon>
+                        </svg>
+                    </div>
                     <h3 class="feature-title">Built To Perform</h3>
                     <p class="feature-desc">Heavy-duty, battlefield-tested materials designed for survival, scuba, or tactical operations.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="creed-svg">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <circle cx="12" cy="12" r="6"></circle>
+                            <circle cx="12" cy="12" r="2"></circle>
+                            <line x1="12" y1="1" x2="12" y2="4"></line>
+                            <line x1="12" y1="20" x2="12" y2="23"></line>
+                            <line x1="1" y1="12" x2="4" y2="12"></line>
+                            <line x1="20" y1="12" x2="23" y2="12"></line>
+                        </svg>
+                    </div>
                     <h3 class="feature-title">Mission Focused</h3>
                     <p class="feature-desc">Fast shipping within 1 business day from Houston, TX, with 30-day secure returns.</p>
                 </div>
@@ -608,6 +632,11 @@
                     <h3>No matching gear found. Try clearing your filters.</h3>
                 </div>
             </div>
+
+            <!-- Show More Container -->
+            <div class="show-more-container" id="show-more-container">
+                <button id="show-more-btn" class="btn btn-secondary">Show More Gear</button>
+            </div>
         </div>
     </section>
 
@@ -690,10 +719,18 @@
         const productCards = document.querySelectorAll('.product-card');
         const noResults = document.getElementById('no-results');
 
+        // Show More pagination elements
+        const showMoreContainer = document.getElementById('show-more-container');
+        const showMoreBtn = document.getElementById('show-more-btn');
+        let showAll = false;
+        const INITIAL_LIMIT = 8;
+
         function filterProducts() {
             const searchTerm = searchInput.value.toLowerCase().trim();
             const filterValue = filterSelect.value;
+            const isFiltering = searchTerm !== '' || filterValue !== 'all';
             let visibleCount = 0;
+            let itemsShown = 0;
 
             productCards.forEach(card => {
                 // Card title is inside data-title attribute
@@ -704,12 +741,26 @@
                 const matchesCategory = filterValue === 'all' || cardCategory === filterValue;
 
                 if (matchesSearch && matchesCategory) {
-                    card.style.display = 'flex';
+                    if (isFiltering || showAll || itemsShown < INITIAL_LIMIT) {
+                        card.style.display = 'flex';
+                        itemsShown++;
+                    } else {
+                        card.style.display = 'none';
+                    }
                     visibleCount++;
                 } else {
                     card.style.display = 'none';
                 }
             });
+
+            // Toggle "Show More" button visibility
+            if (showMoreContainer) {
+                if (!isFiltering && !showAll && visibleCount > INITIAL_LIMIT) {
+                    showMoreContainer.style.display = 'flex';
+                } else {
+                    showMoreContainer.style.display = 'none';
+                }
+            }
 
             if (visibleCount === 0) {
                 noResults.style.display = 'block';
@@ -718,8 +769,29 @@
             }
         }
 
-        searchInput.addEventListener('input', filterProducts);
-        filterSelect.addEventListener('change', filterProducts);
+        if (showMoreBtn) {
+            showMoreBtn.addEventListener('click', () => {
+                showAll = true;
+                filterProducts();
+            });
+        }
+
+        searchInput.addEventListener('input', () => {
+            if (searchInput.value.trim() === '' && filterSelect.value === 'all') {
+                showAll = false;
+            }
+            filterProducts();
+        });
+
+        filterSelect.addEventListener('change', () => {
+            if (searchInput.value.trim() === '' && filterSelect.value === 'all') {
+                showAll = false;
+            }
+            filterProducts();
+        });
+
+        // Initialize grid on page load
+        filterProducts();
 
         // Feedback Cycler
         const reviews = [
