@@ -712,6 +712,92 @@ footer {
     }
 }
 
+/* Hero Feedback Bar */
+.hero-feedback-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(23, 27, 25, 0.9);
+    border-top: var(--border-stitched);
+    backdrop-filter: blur(10px);
+    z-index: 10;
+    padding: 16px 0;
+}
+
+.feedback-bar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+}
+
+.feedback-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.star-rating {
+    color: var(--accent-orange);
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+.rating-text {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    color: var(--text-primary);
+}
+
+.feedback-ticker {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+    color: var(--text-secondary);
+    font-style: italic;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.ticker-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ticker-buyer {
+    color: var(--accent-olive-light);
+    font-style: normal;
+    font-weight: 500;
+    flex-shrink: 0;
+}
+
+.feedback-link-profile {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid var(--accent-olive-dark);
+    padding: 6px 12px;
+    border-radius: 4px;
+    background-color: var(--bg-primary);
+    transition: all var(--transition-speed);
+    flex-shrink: 0;
+}
+
+.feedback-link-profile:hover {
+    border-color: var(--accent-orange);
+    color: var(--accent-orange);
+}
+
 /* Mobile & Responsive Rules */
 @media (max-width: 768px) {
     .nav-links {
@@ -752,8 +838,33 @@ footer {
     .hero {
         background-image: linear-gradient(rgba(10, 12, 11, 0.85), rgba(10, 12, 11, 0.95)), url('images/banner-bg.png');
         background-position: center center;
-        padding: 60px 0 80px 0;
+        padding: 60px 0 140px 0;
         min-height: auto;
+    }
+    
+    .feedback-bar-container {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
+    
+    .feedback-ticker {
+        width: 100%;
+        justify-content: center;
+        white-space: normal;
+        display: block;
+        font-size: 13px;
+        min-height: 40px;
+    }
+    
+    .ticker-buyer {
+        display: inline-block;
+        margin-top: 4px;
+    }
+    
+    .feedback-link-profile {
+        font-size: 14px;
+        padding: 4px 10px;
     }
 
     .hero-title {

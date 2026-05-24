@@ -43,8 +43,26 @@
                 <p class="hero-desc">Authentic U.S. Military Surplus and premium tactical equipment. Every item is hand-inspected, graded for transparency, and ready to deploy from Houston, TX.</p>
                 <div class="hero-buttons">
                     <a href="#inventory" class="btn btn-primary">Shop Live Gear</a>
-                    <a href="https://www.ebay.com/str/missionreadygear" target="_blank" class="btn btn-secondary">Official eBay Store</a>
+                    <a href="https://www.instagram.com/missionreadygear" target="_blank" class="btn btn-secondary">Gear guides, camo history, and new drops — @MissionReadyGear</a>
                 </div>
+            </div>
+        </div>
+        
+        <!-- Live Feedback Ticker Bar -->
+        <div class="hero-feedback-bar">
+            <div class="container feedback-bar-container">
+                <div class="feedback-badge">
+                    <span class="star-rating">★★★★★</span>
+                    <span class="rating-text">100% POSITIVE EBAY FEEDBACK</span>
+                </div>
+                <div class="feedback-ticker">
+                    <span class="ticker-text" id="ticker-review-text">"Super fast shipping! The USMC Gore-Tex parka arrived in perfect condition."</span>
+                    <span class="ticker-buyer" id="ticker-review-buyer">— j***s</span>
+                </div>
+                <a href="https://feedback.ebay.com/fdbk/feedback_profile/mrg-owner" target="_blank" class="feedback-link-profile">
+                    Verify Profile
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                </a>
             </div>
         </div>
     </section>
@@ -702,6 +720,45 @@
 
         searchInput.addEventListener('input', filterProducts);
         filterSelect.addEventListener('change', filterProducts);
+
+        // Feedback Cycler
+        const reviews = [
+            { text: '"Super fast shipping! The USMC Gore-Tex parka arrived in perfect condition."', buyer: "j***s" },
+            { text: '"Item was exactly as described. Sizing was spot on. Very helpful seller. A++"', buyer: "m***k" },
+            { text: '"Genuine US Military Harris pack, heavy duty. Fast delivery & great communication."', buyer: "t***r" },
+            { text: '"Excellent military surplus! Clean, perfect price, fast shipping."', buyer: "d***n" }
+        ];
+        
+        let currentReviewIndex = 0;
+        const reviewTextEl = document.getElementById('ticker-review-text');
+        const reviewBuyerEl = document.getElementById('ticker-review-buyer');
+
+        function cycleReviews() {
+            if (!reviewTextEl || !reviewBuyerEl) return;
+            
+            // Fade out
+            reviewTextEl.style.opacity = 0;
+            reviewBuyerEl.style.opacity = 0;
+            
+            setTimeout(() => {
+                currentReviewIndex = (currentReviewIndex + 1) % reviews.length;
+                const nextReview = reviews[currentReviewIndex];
+                
+                reviewTextEl.textContent = nextReview.text;
+                reviewBuyerEl.textContent = '— ' + nextReview.buyer;
+                
+                // Fade in
+                reviewTextEl.style.opacity = 1;
+                reviewBuyerEl.style.opacity = 1;
+            }, 500); // match transition speed
+        }
+
+        // Initialize transitions
+        if (reviewTextEl && reviewBuyerEl) {
+            reviewTextEl.style.transition = 'opacity 0.5s ease-in-out';
+            reviewBuyerEl.style.transition = 'opacity 0.5s ease-in-out';
+            setInterval(cycleReviews, 5000);
+        }
     </script>
 </body>
 </html>
