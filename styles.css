@@ -169,9 +169,9 @@ header {
 /* Hero Section */
 .hero {
     position: relative;
-    background-image: linear-gradient(to right, rgba(10, 12, 11, 0.95) 40%, rgba(10, 12, 11, 0.4) 70%, rgba(10, 12, 11, 0.95) 100%), url('images/banner-bg.png');
+    background-image: linear-gradient(rgba(10, 12, 11, 0.55), rgba(10, 12, 11, 0.55)), url('images/warehouse-bg.jpg');
     background-size: cover;
-    background-position: center right;
+    background-position: center;
     background-repeat: no-repeat;
     overflow: hidden;
     border-bottom: var(--border-stitched);
@@ -862,8 +862,8 @@ footer {
     }
     
     .hero {
-        background-image: linear-gradient(rgba(10, 12, 11, 0.85), rgba(10, 12, 11, 0.95)), url('images/banner-bg.png');
-        background-position: center center;
+        background-image: linear-gradient(rgba(10, 12, 11, 0.55), rgba(10, 12, 11, 0.55)), url('images/warehouse-bg.jpg');
+        background-position: center;
         padding: 60px 0 140px 0;
         min-height: auto;
     }
